@@ -50,7 +50,7 @@ class StructuredLLM(LLM):
                 "schema must be specified when method is 'function_calling'. "
                 "Received None."
             )
-        llm = self.bind(tools=[schema], format="json")
+        llm = self.bind(tools=[schema], format="json") # give tools argument to llm.invoke. returned llm type is RunnableBindingBase.
         if is_pydantic_schema:
             output_parser: OutputParserLike = PydanticOutputParser(  # type: ignore[type-var]
                 pydantic_object=schema  # type: ignore[arg-type]
