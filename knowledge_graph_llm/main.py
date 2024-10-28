@@ -20,7 +20,7 @@ def add_options():
   flags.DEFINE_string('user', default = 'neo4j', help = 'user name')
   flags.DEFINE_string('password', default = 'neo4j', help = 'password')
   flags.DEFINE_string('database', default = 'neo4j', help = 'database')
-  flags.DEFINE_enum('model', default = 'llama3_fa2', enum_values = {'llama3', 'llama3_fa2', 'qwen2', 'qwen2_fa2'}, help = 'model name')
+  flags.DEFINE_enum('model', default = 'qwen2_fa2', enum_values = {'llama3', 'llama3_fa2', 'qwen2', 'qwen2_fa2'}, help = 'model name')
 
 def main(unused_argv):
   if FLAGS.model == 'llama3':
@@ -37,9 +37,9 @@ def main(unused_argv):
   prompt, _ = extract_triplets_template(tokenizer)
   graph_transformer = LLMGraphTransformer(
     llm = llm, prompt = prompt,
-    #allowed_nodes = ['electrolyte', 'conductivity', 'precursor', 'crystal_system_of_electrolyte', 'space_group_of_electrolyte'],
-    #allowed_relationships = ['has_conductivity', 'has_precursor', 'has_crystal_system', 'has_space_group'],
-    #node_properties = True, relationship_properties = True
+    allowed_nodes = ['electrolyte', 'conductivity', 'precursor', 'crystal_system_of_electrolyte', 'space_group_of_electrolyte'],
+    allowed_relationships = ['has_conductivity', 'has_precursor', 'has_crystal_system', 'has_space_group'],
+    node_properties = True, relationship_properties = True
   )
   neo4j = Neo4jGraph(url = FLAGS.host, username = FLAGS.user, password = FLAGS.password, database = FLAGS.database)
 
